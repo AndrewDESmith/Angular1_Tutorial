@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+  <!-- Directives – HTML annotations that trigger JavaScript behaviors. -->
+  <!-- ng-app attribute is a directive, that runs the store module when the document loads.-->
+<html lang="en" ng-app="store">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  <title>Homepage</title>
+</head>
+<!-- ng-controller is a directive that allows us to attach our StoreController to this element. It will be scoped to this element (store cannot be accessed outside of it). -->
+<!-- store is an alias for StoreController, made using the "as" keyword. -->
+<body ng-controller="StoreController as store">
+  <div ng-repeat="product in store.products">
+    <h1>{{ product.name }}</h1>
+    <h2>${{ product.price }}</h2>
+    <p>{{ product.description }}</p>
+    <button ng-show="product.canPurchase">Add to cart</button>
+    <!-- ng-show is a directive that stores an expression (the boolean store.product.canPurchase), which will only show the element when the expression is true. -->
+    <!-- ng-hide is similar to ng-show, except it hides the element when the stored boolean is true. -->
+  </div>
+  <script type="text/javascript" src="js/angular.min.js"></script>
+  <script type="text/javascript" src="js/app.js"></script>
+  <!-- Expressions – Allow us to insert dynamic values into HTML -->
+  <p>I am {{ 8 + 10 }} turtle years old.</p>
+</body>
+</html>
