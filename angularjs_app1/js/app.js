@@ -1,5 +1,4 @@
 // 'store' is the application name, then any dependencies (or an empty array) are passed in.
-
 (function() {
   // Modules – Where our application components live.
   var app = angular.module('store', []);
@@ -36,6 +35,18 @@
           thumb: ''
         }
       ],
+      reviews: [
+        {
+          stars: 5,
+          body: "I love this product!",
+          author: "joe@thomas.com"
+        },
+        {
+          stars: 1,
+          body: "They shipped me a piece of plastic!",
+          author: "tim@hater.com"
+        }
+      ],
       canPurchase: true,
       soldOut: true
     },
@@ -53,6 +64,7 @@
           thumb: ''
         }
       ],
+      reviews: [],
       canPurchase: false
     }
   ];
