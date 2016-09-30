@@ -8,45 +8,52 @@
   <title>Homepage</title>
 </head>
 <!-- ng-controller is a directive that allows us to attach our StoreController to this element. It will be scoped to this element (store cannot be accessed outside of it). -->
-<!-- store is an alias for StoreController, made using the "as" keyword. -->
 <body ng-controller="StoreController as store">
-  <ul class="list-group">
-    <li class="list-group-item" ng-repeat="product in store.products">
-      <h3>
-        {{ product.name }}
-        <em class="pull-right">{{ product.price | currency }}</em><br>
-        <img ng-src="{{ product.images[0].full }}">
-      </h3>
-      <section ng-controller="PanelController as panel">
-        <ul class="nav nav-pills">
-          <li ng-class="{ active: panel.isSelected(1) }">
-            <a href ng-click="panel.selectTab(1)">Description</a>
-          </li>
-          <li ng-class="{ active: panel.isSelected(2) }">
-            <a href ng-click="panel.selectTab(2)">Specifications</a>
-          </li>
-          <li ng-class="{ active: panel.isSelected(3) }">
-            <a href ng-click="panel.selectTab(3)">Reviews</a>
-          </li>
-        </ul>
-        <div class="panel" ng-show="panel.isSelected(1)">
-          <h4>Description</h4>
-          <p>{{ product.description }}</p>
-        </div>
-        <div class="panel" ng-show="panel.isSelected(2)">
-          <h4>Specifications</h4>
-          <blockquote>None yet</blockquote>
-        </div>
-        <div class="panel" ng-show="panel.isSelected(3)">
-          <h4>Reviews</h4>
-          <blockquote>None yet</blockquote>
-        </div>
-      </section>
-    </li>
-  </ul>
-  <!--   <button ng-show="product.canPurchase">Add to cart</button> -->
-    <!-- ng-show is a directive that stores an expression (the boolean store.product.canPurchase), which will only show the element when the expression is true. -->
-    <!-- ng-hide is similar to ng-show, except it hides the element when the stored boolean is true. -->
+    <ul class="list-group">
+      <!-- store is an alias for StoreController, made using the "as" keyword. -->
+      <li class="list-group-item" ng-repeat="product in store.products">
+        <h3>
+          {{ product.name }}
+          <!-- Filters – the pipe takes the result from the left-hand expression and sends it into the right-hand expression.  Here, the currency filter gives the localized currency and specifies number of decimals. -->
+          <!-- {{ data | filter:options }} -->
+          <em class="pull-right">{{ product.price | currency }}</em>
+          <br>
+          <img ng-src="{{ product.images[0].full }}" alt="">
+        </h3>
+        <!-- ng-init initializes a value on a page refresh. -->
+        <section ng-controller="PanelController as panel">
+          <ul class="nav nav-pills">
+            <!-- ng-class => Directive that has name of the class to set, and an expression to evaluate.  Here, if tab === 1, give this li an "active" (Bootstrap) class to mark the selected tab as blue. -->
+            <li ng-class="{ active:panel.isSelected(1) }">
+              <!-- The ng-click directive allows us to assign values using 2-way data binding – expressions are re-evaluated when a property changes. -->
+              <a href ng-click="panel.selectTab(1)">Description</a>
+            </li>
+            <li ng-class="{ active:panel.isSelected(2) }">
+              <a href ng-click="panel.selectTab(2)">Specification</a>
+            </li>
+            <li ng-class="{ active:panel.isSelected(3) }">
+              <a href ng-click="panel.selectTab(3)">Reviews</a>
+            </li>
+          </ul>
+          <!-- When tab is equal to ... (set on clicks on the above ul), display the appropriate panel. -->
+          <div class="panel" ng-show="panel.isSelected(1)">
+            <h4>Description</h4>
+            <p>{{ product.description }}</p>
+          </div>
+          <div class="panel" ng-show="panel.isSelected(2)">
+            <h4>Specifications</h4>
+            <blockquote>None yet</blockquote>
+          </div>
+          <div class="panel" ng-show="panel.isSelected(3)">
+            <h4>Reviews</h4>
+            <blockquote>None yet</blockquote>
+          </div>
+          <button ng-show="product.canPurchase">Add to cart</button>
+          <!-- ng-show is a directive that stores an expression (the boolean store.product.canPurchase), which will only show the element when the expression is true.
+          <!-- ng-hide is similar to ng-show, except it hides the element when the stored boolean is true. -->
+        </section>
+      </li>
+    </ul>
   <script type="text/javascript" src="js/angular.min.js"></script>
   <script type="text/javascript" src="js/app.js"></script>
 </body>
