@@ -1,1 +1,11 @@
+/* Angular automatically provides these classes on form fields.  ng-dirty = has content (user has begun to fill out the input), ng-valid = conforms to proper format for input type (e.g., an email address). */
 
+/* Red border for invalid form field content. */
+.ng-invalid.ng-dirty {
+  border-color: #FA787E;
+}
+
+/* Green border for valid form field content. */
+.ng-valid.ng-dirty {
+  border-color: #78FA89;
+}

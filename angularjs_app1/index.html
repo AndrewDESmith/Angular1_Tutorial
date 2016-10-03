@@ -6,8 +6,9 @@
   <meta charset="UTF-8">
   <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="bootstrap-select/dist/css/bootstrap-select.min.css">
+  <link rel="stylesheet" type="text/css" href="css/main.css">
   <title>Homepage</title>
-</head>`
+</head>
 <!-- ng-controller is a directive that allows us to attach our StoreController to this element. It will be scoped to this element (store cannot be accessed outside of it). -->
 <body ng-controller="StoreController as store">
     <ul class="list-group">
@@ -47,31 +48,37 @@
           </div>
           <div class="panel" ng-show="panel.isSelected(3)">
             <h4>Reviews</h4>
+            
+            <!-- ng-submit allows us to call a function when the form is submitted. -->
+            <!-- novalidate turns off the browser's default HTML validation.  Do this before we run our own. -->
+            <!-- reviewForm.$valid => If valid is false, then addReview is never called. -->
+            <form name="reviewForm" ng-controller="ReviewController as reviewCtrl" ng-submit="reviewForm.$valid && reviewCtrl.addReview(product)" novalidate>
 
-            <form name="reviewForm">
-
-              <blockquote ng-repeat="review in product.reviews">
-                <b>Stars: {{ review.stars }}</b>
-                {{ review.body }}<br>
-                <cite>{{ review.author }}</cite>
+              <blockquote>
+                <b>{{ reviewCtrl.review.stars }} Stars: </b>
+                {{ reviewCtrl.review.body }}<br>
+                <cite>{{ reviewCtrl.review.author }}</cite>
               </blockquote>
 
               <fieldset class="form-group">
-                <select class="selectpicker form-control" ng-model="review.stars" name="stars">
-                  <optgroup label="Rate the product">
-                    <option value="1" name="1 star">1 star</option>
-                    <option value="2" name="2 stars">2 stars</option>
-                    <option value="3" name="3 stars" selected="selected">3 stars</option>
-                    <option value="4" name="4 stars">4 stars</option>
-                    <option value="5" name="5 stars">5 stars</option>
-                  </optgroup>
+                <!-- required = Required for form to submit (pass validation). -->
+                <select class="selectpicker form-control" ng-model="reviewCtrl.review.stars" name="stars" type="number" required>
+                  <option value="" disabled selected>Rate this Product</option>
+                  <option value="1">1 star</option>
+                  <option value="2">2 stars</option>
+                  <option value="3">3 stars</option>
+                  <option value="4">4 stars</option>
+                  <option value="5">5 stars</option>
                 </select>
               </fieldset>
               <fieldset class="form-group">
-                <textarea class="form-control" ng-model="review.body" placeholder="Write a short review..."></textarea>
+                <textarea class="form-control" ng-model="reviewCtrl.review.body" placeholder="Write a short review..." required></textarea>
               </fieldset>
               <fieldset>
-                <input class="form-control" ng-model="review.author" type="email" placeholder="johndoe@email.com"><br>
+                <input class="form-control" ng-model="reviewCtrl.review.author" type="email" placeholder="johndoe@email.com" name="email" required><br>
+                
+                <!-- AngularJS is taking reviewForm from the form's name attribute.  $valid is a built-in property of the form, taken from Angular. -->
+                <div> reviewForm is {{ reviewForm.$valid }} </div>
                 <input class="btn btn-info pull-right" type="submit" value="Submit Review">
               </fieldset>
 

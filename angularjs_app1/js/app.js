@@ -20,6 +20,16 @@
     };
   });
 
+  app.controller("ReviewController", function() {
+    this.review = {};
+
+    this.addReview = function(product) {
+      product.reviews.push(this.review);
+      // Reset the this.review to a new JS object so that the form removes previous values (live previewed) upon submission.
+      this.review = {};
+    };
+  });
+
   var gems = [
     {
       name: 'Dodecahedron Gem',
