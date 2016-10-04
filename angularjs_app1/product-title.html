@@ -1,0 +1,7 @@
+{{ product.name }}
+<!-- Filters – the pipe takes the result from the left-hand expression and sends it into the right-hand expression.  Here, the currency filter gives the localized currency and specifies number of decimals. -->
+<!-- {{ data | filter:options }} -->
+<em class="pull-right">{{ product.price | currency }}</em>
+<br>
+<br>
+<img ng-src="{{ product.images[0].full }}" alt="product image">

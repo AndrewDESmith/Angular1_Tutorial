@@ -14,87 +14,20 @@
     <ul class="list-group">
       <!-- store is an alias for StoreController, made using the "as" keyword. -->
       <li class="list-group-item" ng-repeat="product in store.products">
+        <!-- ng-include => Include a template file within the element.  Using additional single quotes to directly pass the name of the file (ng-include normally expects a variable). -->
         <h3>
-          {{ product.name }}
-          <!-- Filters – the pipe takes the result from the left-hand expression and sends it into the right-hand expression.  Here, the currency filter gives the localized currency and specifies number of decimals. -->
-          <!-- {{ data | filter:options }} -->
-          <em class="pull-right">{{ product.price | currency }}</em>
-          <br>
-          <img ng-src="{{ product.images[0].full }}" alt="">
+          <!-- *** <product-title> is a custom directive.  Allows for much more expressive, readable HTML, where the behavior and intent become more obvious from the names themselves. *** -->
+          <product-title></product-title>
         </h3>
         <!-- ng-init initializes a value on a page refresh. -->
-        <section ng-controller="PanelController as panel">
-          <ul class="nav nav-pills">
-            <!-- ng-class => Directive that has name of the class to set, and an expression to evaluate.  Here, if tab === 1, give this li an "active" (Bootstrap) class to mark the selected tab as blue. -->
-            <li ng-class="{ active:panel.isSelected(1) }">
-              <!-- The ng-click directive allows us to assign values using 2-way data binding – expressions are re-evaluated when a property changes. -->
-              <a href ng-click="panel.selectTab(1)">Description</a>
-            </li>
-            <li ng-class="{ active:panel.isSelected(2) }">
-              <a href ng-click="panel.selectTab(2)">Specification</a>
-            </li>
-            <li ng-class="{ active:panel.isSelected(3) }">
-              <a href ng-click="panel.selectTab(3)">Reviews</a>
-            </li>
-          </ul>
-          <!-- When tab is equal to ... (set on clicks on the above ul), display the appropriate panel. -->
-          <div class="panel" ng-show="panel.isSelected(1)">
-            <h4>Description</h4>
-            <p>{{ product.description }}</p>
-          </div>
-          <div class="panel" ng-show="panel.isSelected(2)">
-            <h4>Specifications</h4>
-            <blockquote>None yet</blockquote>
-          </div>
-          <div class="panel" ng-show="panel.isSelected(3)">
-            <h4>Reviews</h4>
-            
-            <!-- ng-submit allows us to call a function when the form is submitted. -->
-            <!-- novalidate turns off the browser's default HTML validation.  Do this before we run our own. -->
-            <!-- reviewForm.$valid => If valid is false, then addReview is never called. -->
-            <form name="reviewForm" ng-controller="ReviewController as reviewCtrl" ng-submit="reviewForm.$valid && reviewCtrl.addReview(product)" novalidate>
-
-              <blockquote>
-                <b>{{ reviewCtrl.review.stars }} Stars: </b>
-                {{ reviewCtrl.review.body }}<br>
-                <cite>{{ reviewCtrl.review.author }}</cite>
-              </blockquote>
-
-              <fieldset class="form-group">
-                <!-- required = Required for form to submit (pass validation). -->
-                <select class="selectpicker form-control" ng-model="reviewCtrl.review.stars" name="stars" type="number" required>
-                  <option value="" disabled selected>Rate this Product</option>
-                  <option value="1">1 star</option>
-                  <option value="2">2 stars</option>
-                  <option value="3">3 stars</option>
-                  <option value="4">4 stars</option>
-                  <option value="5">5 stars</option>
-                </select>
-              </fieldset>
-              <fieldset class="form-group">
-                <textarea class="form-control" ng-model="reviewCtrl.review.body" placeholder="Write a short review..." required></textarea>
-              </fieldset>
-              <fieldset>
-                <input class="form-control" ng-model="reviewCtrl.review.author" type="email" placeholder="johndoe@email.com" name="email" required><br>
-                
-                <!-- AngularJS is taking reviewForm from the form's name attribute.  $valid is a built-in property of the form, taken from Angular. -->
-                <div> reviewForm is {{ reviewForm.$valid }} </div>
-                <input class="btn btn-info pull-right" type="submit" value="Submit Review">
-              </fieldset>
-
-            </form>
-
-          </div>
-          <button class="btn btn-success btn-lg" ng-show="product.canPurchase">Add to cart</button>
-          <!-- ng-show is a directive that stores an expression (the boolean store.product.canPurchase), which will only show the element when the expression is true. -->
-          <!-- ng-hide is similar to ng-show, except it hides the element when the stored boolean is true. -->
-        </section>
+        <!-- controllerAs property on the productPanels directive enables us to omit specifying the ng-controller attribute. -->
+        <product-panels></product-panels>
       </li>
     </ul>
+  </body>
   <script src="js/jquery-3.1.1.min.js" type="text/javascript"></script>
   <script type="text/javascript" src="js/angular.min.js"></script>
   <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="bootstrap-select/js/bootstrap-select.js"></script>
   <script type="text/javascript" src="js/app.js"></script>
-</body>
 </html>
