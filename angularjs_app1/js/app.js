@@ -1,7 +1,8 @@
 // 'store' is the application name, then any dependencies (or an empty array) are passed in.
 (function() {
   // Modules – Where our application components live.
-  var app = angular.module('store', []);
+  // Second parameter is an array where the dependencies for the module of the first parameter are specified (names of other modules).
+  var app = angular.module('store', ['store-products']);
 
   // Controllers – Where we add application behavior.
   app.controller('StoreController', function() {
@@ -30,39 +31,6 @@
     };
   });
 
-  // Dash in HTML (product-title) translates to camelCase (productTitle) in JavaScript.
-  app.directive('productTitle', function() {
-    // Returns a directive definition object: a configuration object defining how your directive will work.
-    return {
-      // Specifiy type of directive (here, 'E' for element).
-      restrict: 'E',
-      // What template page will this directive load into?
-      templateUrl: 'product-title.html'
-    };
-  });
-
-  app.directive("productPanels", function() {
-    return {
-      restrict: 'E',
-      templateUrl: 'product-panels.html',
-      controller: function() {
-        app.controller("PanelController", function() {
-          // Initial value of tab is 1.
-          this.tab = 1;
-          // Update the tab's value and feed it to ng-click in the list.
-          this.selectTab = function(setTab) {
-            this.tab = setTab;
-          };
-          this.isSelected = function(checkTab) {
-            return this.tab === checkTab;
-          };
-        });
-      },
-      // Enables use of panels as our Controller alias.
-      controllerAs: 'panels'
-    };
-  });
-
   var gems = [
     {
       name: 'Dodecahedron Gem',
@@ -71,7 +39,7 @@
       images: [
         {
           full: 'images/dodecahedron.gif',
-          thumb: ''
+          thumb: 'images/dodecahedron-thumb.JPG'
         },
         {
           full: 'images/dodecahedron2.gif',
